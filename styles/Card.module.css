@@ -1,0 +1,143 @@
+@import url('https://fonts.googleapis.com/css2?family=Red+Hat+Display:ital,wght@0,400;0,500;0,700;0,900;1,400;1,500;1,700;1,900&display=swap');
+
+.card{
+    display: flex;
+    border-radius: 32px;
+    overflow: hidden;
+    background-color: #151371;
+    font-family: 'Red Hat Display', sans-serif;
+}
+
+.card__information{
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex-grow: 1;
+    width: 50%;
+    padding: 0 32px;
+    font-family: 'Red Hat Display', sans-serif;
+}
+
+.inner_info{
+    height: 100%;
+    flex-grow: 1;
+    transform: translateY(50%);
+}
+
+.card__form{
+    background-color: white;
+    height: 100%;
+    padding: 32px;
+    overflow: hidden;
+    flex-grow: 1;
+    width: 50%;
+}
+
+
+.card__text{
+    color: white;
+    text-align: center;
+    font-size: 36px;
+    font-weight: 700;
+    font-family: 'Red Hat Display', sans-serif;
+}
+
+.card__message{
+    color: white;
+    text-align: center;
+    width: 80%;
+    margin: 0 auto;
+    font-family: 'Red Hat Display', sans-serif;
+}
+
+.button{
+    display: block;
+    border-radius: 8px;
+    background-color: #151371;
+    color: white;
+    padding: 8px 0;
+    font-weight: bold;
+    cursor: pointer;
+    border: none;
+    width: 100%;
+    font-family: 'Red Hat Display', sans-serif;
+}
+
+.input{
+    border: none;
+    display: block;
+    width: 100%;
+    padding: 0 8px;
+    flex-grow: 1;
+    outline: none;
+}
+
+.input_container{
+    display: flex;
+    align-items: stretch;
+    border: 1px solid #B9BCC1;
+    border-radius: 8px;
+    margin-bottom: 16px;
+}
+
+.input_container:focus{
+    border: none;
+}
+
+.label{
+    font-size: 12px;
+}
+
+.icon_container{
+    margin: 4px 8px;
+}
+
+.social_items{
+    display: flex;
+    margin: 16px 0;
+    justify-content: center;
+}
+
+.social_item{
+    margin-left: 32px;
+    cursor: pointer;
+}
+
+.link{
+    color: #151371;
+    text-decoration: none;
+}
+
+.info_text{
+    color: #B9BCC1;
+    font-size: 70%;
+    margin-top: 16px;
+    font-family: 'Red Hat Display', sans-serif;
+}
+
+.divider_container{
+    display: flex;
+    align-items: center;
+    margin: 16px 0;
+}
+
+.divider_root{
+    flex-grow: 1;
+}
+
+.divider{
+    background-color: #B9BCC1;
+    color: red;
+}
+
+.sign_in_text{
+    font-size: 24px;
+    font-family: 'Red Hat Display', sans-serif;
+}
+
+.or{
+    font-size: 80%;
+    color: #B9BCC1;
+    margin: 0 8px;
+}
