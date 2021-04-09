@@ -1,12 +1,11 @@
 import styles from "../styles/Dialog.module.css";
-import Image from "next/image";
 import {useState} from "react";
 import axios from "axios";
 
 const Dialog = ({handleDialogClose}) => {
     const [user, setUser] = useState({});
-    const [hobbies, setHobbies] = useState([]);
-    const [hobby, setHobby] = useState("");
+    const [languages, setLanguages] = useState([]);
+    const [language, setLanguage] = useState("");
 
     const handleUserChange = event => {
         setUser({...user, [event.target.name]: event.target.value});
@@ -14,32 +13,32 @@ const Dialog = ({handleDialogClose}) => {
     }
 
     const handleHobbyChange = event => {
-        setHobby(event.target.value);
+        setLanguage(event.target.value);
     }
 
     const handleHobbyAdd = e => {
         e.preventDefault();
-        setHobbies([...hobbies, hobby]);
-        setHobby("")
+        setLanguages([...languages, language]);
+        setLanguage("")
     }
 
-    const handleHobbyRemove = hobby => {
-        setHobbies(hobbies.filter(h => h !== hobby));
+    const handleHobbyRemove = language => {
+        setLanguages(languages.filter(l => l !== language));
     }
 
     const handleUserDetailsSubmit = event => {
         event.preventDefault();
 
         axios({
-            url: `'http://localhost:5000/api/v1/users'`,
+            url: `http://localhost:5000/api/v1/users`,
             method: 'post',
-            data: {...user, hobbies}
+            data: {...user, languages}
         }).then(res => {
             const {data, message} = res.data;
             console.log(data, message);
             handleDialogClose();
         }).catch(error => {
-            console.log(error.data.error.message);
+            console.log(error.data);
         });
     }
     return (
@@ -90,8 +89,8 @@ const Dialog = ({handleDialogClose}) => {
                         value={user.website}
                         className={styles.input}
                         type="url"
-                        name="website"
-                        placeholder="Enter website url"
+                        name="github"
+                        placeholder="Enter github url"
                     />
                 </div>
 
@@ -109,28 +108,28 @@ const Dialog = ({handleDialogClose}) => {
                 <div>
                     <div className={styles.hobby_form_container}>
                         <input
-                            value={hobby}
+                            value={language}
                             onChange={handleHobbyChange}
                             className={styles.add_hobby_input}
                             type="text"
-                            placeholder="Enter hobby"
+                            placeholder="Enter Language"
                         />
 
                         <button
                             className={styles.add_hobby_button}
-                            value="Add Hobby"
+                            value="Add Programming Language"
                             onClick={handleHobbyAdd}>
-                            Add Hobby
+                            Add Language
                         </button>
                     </div>
                     <div className={styles.hobbies_container}>
-                        {hobbies.length ? (
-                            hobbies.map((hobby, index) => {
+                        {languages.length ? (
+                            languages.map((language, index) => {
                                 return (
                                     <p className={styles.chip} key={index}>
-                                        <span className={styles.chip_text}>{hobby}</span>
+                                        <span className={styles.chip_text}>{language}</span>
                                         <span className={styles.chip_close_container}
-                                              onClick={() => handleHobbyRemove(hobby)}>
+                                              onClick={() => handleHobbyRemove(language)}>
                                         <img alt="" title="" width={20} height={10} src="/close.svg"/>
                                 </span>
                                     </p>
