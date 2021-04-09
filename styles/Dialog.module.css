@@ -1,0 +1,132 @@
+.container {
+    width: 500px;
+    border-radius: 8px;
+    background-image: linear-gradient(to right, #ff00bb, #ffc700);
+    padding: 32px;
+}
+
+.hobby_form_container {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.add_hobby_button {
+    width: 20%;
+    border-radius: 8px;
+    background-color: #151371;
+    color: white;
+    padding: 8px 4px;
+    font-weight: bold;
+    cursor: pointer;
+    border: none;
+    font-family: 'Red Hat Display', sans-serif;
+}
+
+.add_hobby_input {
+    width: 80%;
+    margin-right: 16px;
+    border: none;
+    padding: 8px;
+    outline: none;
+    border-radius: 8px;
+}
+
+
+.submit_button {
+    border-radius: 8px;
+    display: block;
+    background-color: #151371;
+    color: white;
+    padding: 8px 12px;
+    font-weight: bold;
+    cursor: pointer;
+    border: none;
+    font-family: 'Red Hat Display', sans-serif;
+    margin-left: 16px;
+}
+
+
+.close_dialog_button {
+    border-radius: 8px;
+    display: block;
+    background-color: rgba(0, 0, 0, 0);
+    border: 2px solid #151371;
+    color: #333333;
+    padding: 8px 12px;
+    font-weight: bold;
+    cursor: pointer;
+    font-family: 'Red Hat Display', sans-serif;
+}
+
+.input {
+    border: none;
+    outline: none;
+    width: 100%;
+    margin-top: 16px;
+    padding: 8px;
+    border-radius: 8px;
+}
+
+
+.info_text {
+    margin-top: 8px;
+    color: #151371;
+    text-align: center;
+    font-family: 'Roboto', sans-serif;
+}
+
+.hobby_form_container {
+    margin-top: 16px;
+}
+
+.chip {
+    display: inline-block;
+    background-image: linear-gradient(to right, #ff00bb, #ffc700);
+    border-radius: 32px;
+    padding: 8px;
+    cursor: pointer;
+    margin-right: 4px;
+    border: 1px solid #151371;
+}
+
+.chip_text {
+    font-family: 'Roboto', sans-serif;
+    color: #151371;
+}
+
+.chip_close_container {
+    background-color: #aaaaaa;
+    border-radius: 50%;
+    margin-top: 16px;
+    margin-left: 4px;
+}
+
+.greeting_text {
+    color: #151371;
+    font-size: 32px;
+    text-align: center;
+    font-family: 'Roboto', sans-serif;
+}
+
+.hobbies_container {
+    margin-top: 16px;
+}
+
+.no_hobbies_container {
+    background-color: #eeeeee;
+    border-radius: 8px;
+    padding: 32px;
+    margin-top: 16px;
+}
+
+.buttons_container {
+    display: flex;
+    justify-content: end;
+    margin-top: 16px;
+}
+
+.divider {
+    color: #151371;
+    margin: 32px 0;
+}

@@ -36,3 +36,23 @@
     display: inline-block;
     margin: 0 16px;
 }
+
+.mt-xl{
+    margin-top: 20px;
+}
+
+.mt-lg{
+    margin-top: 16px;
+}
+
+.mt-md{
+    margin-top: 12px;
+}
+
+.mt-sm{
+    margin-top: 8px;
+}
+
+.mt-xs{
+    margin-top: 4px;
+}
