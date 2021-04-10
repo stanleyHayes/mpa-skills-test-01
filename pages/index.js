@@ -4,10 +4,21 @@ import Dialog from "../components/dialog";
 import styles from "../styles/Home.module.css";
 import {useSession, signIn, signOut} from "next-auth/client";
 
-const HomePage = () => {
+export const getStaticProps = async (context) => {
+    const email = context.params.email;
+    const res = await fetch(`https://git.heroku.com/mpa-mern-test-01.git/api/v1/users/${email}`);
+    const data = await res.json();
+    return {
+        props: {data}
+    }
+}
+
+const HomePage = ({data}) => {
 
     const [session, loading] = useSession();
     const [open, setOpen] = useState(false);
+    const [profile, setProfile] = useState({});
+
     const handleDialogClose = () => {
         setOpen(false)
     }
@@ -32,6 +43,19 @@ const HomePage = () => {
         }
     }, [session]);
 
+
+    useEffect(() => {
+        if (data) {
+            setProfile(data);
+        }
+    }, [session]);
+
+    const handleProfile = data => {
+        setProfile(data);
+    }
+
+    console.log(data)
+
     return (
         <div className={styles.container}>
             <Head>
@@ -52,7 +76,10 @@ const HomePage = () => {
                         <h1 className={styles.name}>{session.user.name}</h1>
                         <p className={styles.email}>{session.user.email}</p>
                         <div className={styles.button_container}>
-                            <button className={styles.sign_out_button} onClick={handleSignOut}>Sign Out</button>
+                            <button
+                                className={styles.sign_out_button}
+                                onClick={handleSignOut}>Sign Out
+                            </button>
                         </div>
                     </div>
                 )}
@@ -70,7 +97,7 @@ const HomePage = () => {
 
                 {open ? (
                     <div className={styles.dialog}>
-                        <Dialog handleDialogClose={handleDialogClose}/>
+                        <Dialog handleProfile={handleProfile} session={session} handleDialogClose={handleDialogClose}/>
                     </div>
                 ) : null}
 

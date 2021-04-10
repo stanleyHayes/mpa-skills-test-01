@@ -2,14 +2,13 @@ import styles from "../styles/Dialog.module.css";
 import {useState} from "react";
 import axios from "axios";
 
-const Dialog = ({handleDialogClose}) => {
-    const [user, setUser] = useState({});
+const Dialog = ({handleDialogClose, session, handleProfile}) => {
+    const [user, setUser] = useState({email: session.email, name: session.name});
     const [languages, setLanguages] = useState([]);
     const [language, setLanguage] = useState("");
 
     const handleUserChange = event => {
         setUser({...user, [event.target.name]: event.target.value});
-        console.log(user)
     }
 
     const handleHobbyChange = event => {
@@ -30,11 +29,12 @@ const Dialog = ({handleDialogClose}) => {
         event.preventDefault();
 
         axios({
-            url: `http://localhost:5000/api/v1/users`,
+            url: `https://git.heroku.com/mpa-mern-test-01.git/api/v1/users`,
             method: 'post',
             data: {...user, languages}
         }).then(res => {
             const {data, message} = res.data;
+            handleProfile(data);
             console.log(data, message);
             handleDialogClose();
         }).catch(error => {
