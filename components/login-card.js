@@ -23,7 +23,9 @@ const LoginCard = () => {
                         <Image src="/linkedin-colored.svg" width={25} height={25}/>
                     </div>
                     <div className={styles.social_item}>
-                        <Image src="/github-colored.svg" width={25} height={25}/>
+                        <a href="http://localhost:3000/api/auth/signin">
+                            <Image src="/github-colored.svg" width={25} height={25}/>
+                        </a>
                     </div>
                     <div className={styles.social_item}>
                         <Image src="/facebook-colored.svg" width={25} height={25}/>
