@@ -1,6 +1,7 @@
 import styles from "../styles/Dialog.module.css";
 import {useState} from "react";
 import axios from "axios";
+import {PRODUCTION_SERVER_URL} from "../constants/constants";
 
 const Dialog = ({handleDialogClose, session, handleProfile, mode, profile}) => {
     const [user, setUser] = useState({
@@ -37,7 +38,7 @@ const Dialog = ({handleDialogClose, session, handleProfile, mode, profile}) => {
 
         setLoading(true);
         axios({
-            url: `http://localhost:5000/api/v1/users`,
+            url: `${PRODUCTION_SERVER_URL}/api/v1/users`,
             method: 'post',
             headers: {
                 'Access-Control-Allow-Origin': "*"
@@ -56,10 +57,9 @@ const Dialog = ({handleDialogClose, session, handleProfile, mode, profile}) => {
 
     const handleUserDetailsUpdate = event => {
         event.preventDefault();
-
         setLoading(true);
         axios({
-            url: `http://localhost:5000/api/v1/users/${user.email}`,
+            url: `${PRODUCTION_SERVER_URL}/api/v1/users/${user.email}`,
             method: 'put',
             headers: {
                 'Access-Control-Allow-Origin': "*"
