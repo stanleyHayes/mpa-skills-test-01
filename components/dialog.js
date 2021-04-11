@@ -1,17 +1,17 @@
 import styles from "../styles/Dialog.module.css";
 import {useState} from "react";
 import axios from "axios";
-import {PRODUCTION_SERVER_URL} from "../constants/constants";
+import {DEVELOPMENT_SERVER_URL, PRODUCTION_SERVER_URL} from "../constants/constants";
 
 const Dialog = ({handleDialogClose, session, handleProfile, mode, profile}) => {
     const [user, setUser] = useState({
-        email: session.user.email,
-        name: session.user.name,
+        email: session && session.user && session.user.email,
+        name: session && session.user && session.user.name,
         bio: profile.bio,
         occupation: profile.occupation,
         github: profile.github
     });
-    const [languages, setLanguages] = useState(profile.languages);
+    const [languages, setLanguages] = useState(profile.languages || []);
     const [language, setLanguage] = useState("");
     const [loading, setLoading] = useState(false);
 
@@ -38,7 +38,7 @@ const Dialog = ({handleDialogClose, session, handleProfile, mode, profile}) => {
 
         setLoading(true);
         axios({
-            url: `${PRODUCTION_SERVER_URL}/api/v1/users`,
+            url: `${DEVELOPMENT_SERVER_URL}/api/v1/users`,
             method: 'post',
             headers: {
                 'Access-Control-Allow-Origin': "*"
@@ -59,7 +59,7 @@ const Dialog = ({handleDialogClose, session, handleProfile, mode, profile}) => {
         event.preventDefault();
         setLoading(true);
         axios({
-            url: `${PRODUCTION_SERVER_URL}/api/v1/users/${user.email}`,
+            url: `${DEVELOPMENT_SERVER_URL}/api/v1/users/${user.email}`,
             method: 'put',
             headers: {
                 'Access-Control-Allow-Origin': "*"
@@ -84,7 +84,7 @@ const Dialog = ({handleDialogClose, session, handleProfile, mode, profile}) => {
                     <p className={styles.greeting_text}>{user.name}</p>
                     <p className={styles.info_text}>Update your profile</p>
                 </div>
-            ): (
+            ) : (
                 <div>
                     <p className={styles.greeting_text}>Greetings & Welcome</p>
                     <p className={styles.info_text}>We are glad you joined</p>

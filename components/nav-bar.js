@@ -1,7 +1,11 @@
 import Link from "next/link";
 import Image from "next/image";
+import {useSession, signOut} from "next-auth/client";
 
 const NavBar = () => {
+
+    const [session] = useSession();
+
     return (
         <nav className="nav-container">
             <div className="social-icon-links">
@@ -27,11 +31,21 @@ const NavBar = () => {
                 <Link href="/services"><a className="link">Services</a></Link>
                 <Link href="/events"><a className="link">Events</a></Link>
                 <Link href="/learn"><a className="link">Learn</a></Link>
-                <Link href="/">
-                    <a className="link">
-                        <Image src="/mp_gradient_rock.svg" width={50} height={50} />
+                {session ? (
+                    <a className="link" onClick={(e) => {
+                        e.preventDefault();
+                        signOut();
+                    }}>
+                        Sign Out
                     </a>
-                </Link>
+                ) : (
+                    <Link href="/login"><a className="link">
+                        <a className="link">
+                            Sign In
+                        </a>
+                    </a></Link>
+
+                )}
             </div>
         </nav>
     )

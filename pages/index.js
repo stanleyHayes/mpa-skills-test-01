@@ -41,12 +41,15 @@ const HomePage = () => {
                         github: data.github,
                         languages: data.languages
                     });
+                    setMode("edit")
                     handleDialogOpen();
                 }else {
+                    handleDialogOpen();
                     setProfile({email: session.user.email, name: session.user.name});
                 }
             }).catch(error => {
-
+                console.log(error)
+                handleDialogOpen();
             });
         }
     }, [session]);
