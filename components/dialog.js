@@ -2,10 +2,17 @@ import styles from "../styles/Dialog.module.css";
 import {useState} from "react";
 import axios from "axios";
 
-const Dialog = ({handleDialogClose, session, handleProfile}) => {
-    const [user, setUser] = useState({email: session.email, name: session.name});
-    const [languages, setLanguages] = useState([]);
+const Dialog = ({handleDialogClose, session, handleProfile, mode, profile}) => {
+    const [user, setUser] = useState({
+        email: session.user.email,
+        name: session.user.name,
+        bio: profile.bio,
+        occupation: profile.occupation,
+        github: profile.github
+    });
+    const [languages, setLanguages] = useState(profile.languages);
     const [language, setLanguage] = useState("");
+    const [loading, setLoading] = useState(false);
 
     const handleUserChange = event => {
         setUser({...user, [event.target.name]: event.target.value});
@@ -28,26 +35,64 @@ const Dialog = ({handleDialogClose, session, handleProfile}) => {
     const handleUserDetailsSubmit = event => {
         event.preventDefault();
 
+        setLoading(true);
         axios({
-            url: `https://git.heroku.com/mpa-mern-test-01.git/api/v1/users`,
+            url: `http://localhost:5000/api/v1/users`,
             method: 'post',
+            headers: {
+                'Access-Control-Allow-Origin': "*"
+            },
             data: {...user, languages}
         }).then(res => {
-            const {data, message} = res.data;
+            const {data} = res.data;
             handleProfile(data);
-            console.log(data, message);
+            setLoading(false);
             handleDialogClose();
         }).catch(error => {
+            setLoading(false);
             console.log(error.data);
         });
     }
+
+    const handleUserDetailsUpdate = event => {
+        event.preventDefault();
+
+        setLoading(true);
+        axios({
+            url: `http://localhost:5000/api/v1/users/${user.email}`,
+            method: 'put',
+            headers: {
+                'Access-Control-Allow-Origin': "*"
+            },
+            data: {...user, languages}
+        }).then(res => {
+            const {data} = res.data;
+            handleProfile(data);
+            setLoading(false);
+            handleDialogClose();
+        }).catch(error => {
+            setLoading(false);
+            console.log(error.data);
+        });
+    }
+
     return (
         <div className={styles.container}>
-            <p className={styles.greeting_text}>Greetings & Welcome</p>
-            <p className={styles.info_text}>We are glad you joined</p>
-            <p className={styles.info_text}>Please fill this form with your personal details</p>
-
+            {mode === "edit" ? (
+                <div>
+                    <p className={styles.info_text}>Welcome back </p>
+                    <p className={styles.greeting_text}>{user.name}</p>
+                    <p className={styles.info_text}>Update your profile</p>
+                </div>
+            ): (
+                <div>
+                    <p className={styles.greeting_text}>Greetings & Welcome</p>
+                    <p className={styles.info_text}>We are glad you joined</p>
+                    <p className={styles.info_text}>Please fill this form with your personal details</p>
+                </div>
+            )}
             <form>
+                {loading && <p className={styles.loading_text}>Loading...</p>}
                 <div>
                     <input
                         onChange={handleUserChange}
@@ -76,6 +121,7 @@ const Dialog = ({handleDialogClose, session, handleProfile}) => {
                     <input
                         onChange={handleUserChange}
                         value={user.occupation}
+                        defaultValue={profile.occupation}
                         className={styles.input}
                         type="text"
                         name="occupation"
@@ -86,7 +132,8 @@ const Dialog = ({handleDialogClose, session, handleProfile}) => {
                 <div>
                     <input
                         onChange={handleUserChange}
-                        value={user.website}
+                        value={user.github}
+                        defaultValue={profile.github}
                         className={styles.input}
                         type="url"
                         name="github"
@@ -98,6 +145,7 @@ const Dialog = ({handleDialogClose, session, handleProfile}) => {
                     <textarea
                         onChange={handleUserChange}
                         value={user.bio}
+                        defaultValue={profile.bio}
                         rows={5}
                         name="bio"
                         className={styles.input}
@@ -112,7 +160,7 @@ const Dialog = ({handleDialogClose, session, handleProfile}) => {
                             onChange={handleHobbyChange}
                             className={styles.add_hobby_input}
                             type="text"
-                            placeholder="Enter Language"
+                            placeholder="Enter Programming Language"
                         />
 
                         <button
@@ -123,7 +171,7 @@ const Dialog = ({handleDialogClose, session, handleProfile}) => {
                         </button>
                     </div>
                     <div className={styles.hobbies_container}>
-                        {languages.length ? (
+                        {languages && languages.length ? (
                             languages.map((language, index) => {
                                 return (
                                     <p className={styles.chip} key={index}>
@@ -137,8 +185,7 @@ const Dialog = ({handleDialogClose, session, handleProfile}) => {
                             })
                         ) : (
                             <div className={styles.no_hobbies_container}>
-                                <p className={styles.info_text}>You have no hobbies!!!Really?</p>
-                                <p className={styles.info_text}>Are you that boring?</p>
+                                <p className={styles.info_text}>I wonder what you code in...</p>
                             </div>
                         )}
                     </div>
@@ -155,13 +202,24 @@ const Dialog = ({handleDialogClose, session, handleProfile}) => {
                         Close
                     </button>
 
-                    <button
-                        className={styles.submit_button}
-                        onClick={handleUserDetailsSubmit}
-                        value="Submit"
-                        type="submit">
-                        Submit
-                    </button>
+                    {mode === "edit" ? (
+                        <button
+                            className={styles.submit_button}
+                            onClick={handleUserDetailsUpdate}
+                            value="Submit"
+                            type="submit">
+                            Update
+                        </button>
+                    ) : (
+                        <button
+                            className={styles.submit_button}
+                            onClick={handleUserDetailsSubmit}
+                            value="Submit"
+                            type="submit">
+                            Submit
+                        </button>
+                    )}
+
 
                 </div>
             </form>

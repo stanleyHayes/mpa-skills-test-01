@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import styles from "./../styles/Card.module.css";
+import {signIn} from "next-auth/client";
 
 const LoginCard = () => {
     return (
@@ -23,7 +24,10 @@ const LoginCard = () => {
                         <Image src="/linkedin-colored.svg" width={25} height={25}/>
                     </div>
                     <div className={styles.social_item}>
-                        <a href="http://localhost:3000/api/auth/signin">
+                        <a href="http://localhost:3000/api/auth/signin" onClick={(e) => {
+                            e.preventDefault();
+                            signIn();
+                        }}>
                             <Image src="/github-colored.svg" width={25} height={25}/>
                         </a>
                     </div>
